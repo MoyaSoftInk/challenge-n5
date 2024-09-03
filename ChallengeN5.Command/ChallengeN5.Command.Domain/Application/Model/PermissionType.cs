@@ -5,7 +5,7 @@ using ChallengeN5.Command.Domain.Architecture.SeedWork;
 /// <summary>
 /// Permission type entity
 /// </summary>
-public class PermissionType : AuditableEntity<PermissionType, Guid>
+public class PermissionType : AuditableEntity<PermissionType, int>
 {
     /// <summary>
     /// Permission type name
