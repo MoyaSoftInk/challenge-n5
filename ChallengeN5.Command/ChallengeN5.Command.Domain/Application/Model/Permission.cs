@@ -5,12 +5,12 @@ using ChallengeN5.Command.Domain.Architecture.SeedWork;
 /// <summary>
 /// Permission entity
 /// </summary>
-public class Permission : AuditableEntity<Permission, Guid>
+public class Permission : AuditableEntity<Permission, int>
 {
     /// <summary>
     /// Employee Id
     /// </summary>
-    public Guid EmployeeId { get; set; }
+    public int EmployeeId { get; set; }
 
     /// <summary>
     /// Employee entity
@@ -20,7 +20,7 @@ public class Permission : AuditableEntity<Permission, Guid>
     /// <summary>
     /// Permission Type Id
     /// </summary>
-    public Guid PermissionTypeId { get; set; }
+    public int PermissionTypeId { get; set; }
 
     /// <summary>
     /// Permission Type entity

@@ -5,7 +5,7 @@ using ChallengeN5.Command.Domain.Architecture.SeedWork;
 /// <summary>
 /// Employee entity
 /// </summary>
-public class Employee : AuditableEntity<Employee, Guid>
+public class Employee : AuditableEntity<Employee, int>
 {
     /// <summary>
     /// First name of the employee
