@@ -1,4 +1,4 @@
-﻿namespace ChallengeN5.Command.Persistance.Data;
+﻿namespace ChallengeN5.Command.Persistance.Application.Data;
 
 using ChallengeN5.Command.Domain.Application.Model;
 

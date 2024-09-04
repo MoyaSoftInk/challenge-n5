@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChallengeN5.Command.Persistance.Migrations
 {
     [DbContext(typeof(N5Context))]
-    [Migration("20240903210227_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240904230526_PermissionIsActive")]
+    partial class PermissionIsActive
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,15 +86,16 @@ namespace ChallengeN5.Command.Persistance.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("EndDate")
-                        .IsRequired()
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PermissionTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("StartDate")
-                        .IsRequired()
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")

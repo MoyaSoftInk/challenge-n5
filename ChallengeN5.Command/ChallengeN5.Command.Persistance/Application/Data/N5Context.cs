@@ -1,4 +1,4 @@
-﻿namespace ChallengeN5.Command.Persistance.Data;
+﻿namespace ChallengeN5.Command.Persistance.Application.Data;
 
 using ChallengeN5.Command.Domain.Application.Model;
 using Microsoft.EntityFrameworkCore;
@@ -25,12 +25,12 @@ public class N5Context : DbContext
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(x => x.Id);
-            entity.Property(x=>x.FirstName).HasMaxLength(50).IsRequired();
+            entity.Property(x => x.FirstName).HasMaxLength(50).IsRequired();
             entity.Property(x => x.LastName).HasMaxLength(50).IsRequired();
             entity.Property(x => x.Position).HasMaxLength(50).IsRequired();
         });
 
-        modelBuilder.Entity<PermissionType>(entity => 
+        modelBuilder.Entity<PermissionType>(entity =>
         {
             entity.HasKey(x => x.Id);
             entity.Property(x => x.Name).HasMaxLength(50).IsRequired();
