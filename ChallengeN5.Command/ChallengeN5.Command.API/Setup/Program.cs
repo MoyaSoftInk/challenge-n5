@@ -1,4 +1,11 @@
-using ChallengeN5.Command.Persistance.Data;
+using ChallengeN5.Command.API.Application.Command.PostRequestPermision;
+using ChallengeN5.Command.API.Architecture.Core;
+using ChallengeN5.Command.Domain.Application.Repository;
+using ChallengeN5.Command.Domain.Architecture.Core;
+using ChallengeN5.Command.Persistance.Application;
+using ChallengeN5.Command.Persistance.Application.Data;
+using ChallengeN5.Command.Persistance.Application.Repository;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -37,10 +44,16 @@ builder.Services
     .AddDbContext<N5Context>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), options => options.MigrationsAssembly("ChallengeN5.Command.Persistance")));
 
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<PostRequestPermisionHandler>());
+
+builder.Services.Decorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkHandlerDecorator<,>));
+
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
