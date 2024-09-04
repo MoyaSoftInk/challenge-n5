@@ -4,6 +4,7 @@ using ChallengeN5.Command.Persistance.Application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChallengeN5.Command.Persistance.Migrations
 {
     [DbContext(typeof(N5Context))]
-    partial class N5ContextModelSnapshot : ModelSnapshot
+    [Migration("20240904230526_PermissionIsActive")]
+    partial class PermissionIsActive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

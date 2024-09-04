@@ -42,7 +42,7 @@ public class PostRequestPermisionHandler : IRequestHandler<PostRequestPermisionC
         return new BaseResponse
         {
             HttpCode = 201,
-            HttpMessage = "Permission created"
+            HttpMessage = "Permission was requested"
         };
     }
 }

@@ -28,12 +28,17 @@ public class Permission : AuditableEntity<Permission, int>
     public virtual PermissionType PermissionType { get; set; } = null!;
 
     /// <summary>
-    /// Date when the permission starts, if null it means the permission is inactive
+    /// Date when the permission starts
     /// </summary>
-    public DateTime? StartDate { get; set; }
+    public DateTime StartDate { get; set; }
 
     /// <summary>
     /// Date when the permission ends
     /// </summary>
-    public DateTime? EndDate { get; set; }
+    public DateTime EndDate { get; set; }
+
+    /// <summary>
+    /// Indicates if the permission is active
+    /// </summary>
+    public bool IsActive { get; set; } = false;
 }
