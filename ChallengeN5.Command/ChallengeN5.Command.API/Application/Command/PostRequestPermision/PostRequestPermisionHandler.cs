@@ -1,6 +1,7 @@
 ﻿namespace ChallengeN5.Command.API.Application.Command.PostRequestPermision;
 
 using ChallengeN5.Command.API.Architecture.Model;
+using ChallengeN5.Command.Domain.Application.Model;
 using ChallengeN5.Command.Domain.Application.Repository;
 using MediatR;
 using System.Threading;
@@ -31,7 +32,8 @@ public class PostRequestPermisionHandler : IRequestHandler<PostRequestPermisionC
     /// <exception cref="NotImplementedException"></exception>
     public async Task<BaseResponse> Handle(PostRequestPermisionCommand request, CancellationToken cancellationToken)
     {
-        await _permissionRepository.CreateAsync(new Domain.Application.Model.Permission
+        // add some validations
+        await _permissionRepository.CreateAsync(new Permission
         {
             EmployeeId = request.EmployeeId,
             PermissionTypeId = request.PermissionTypeId,
