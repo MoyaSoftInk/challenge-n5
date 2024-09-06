@@ -5,9 +5,9 @@ using ChallengeN5.Command.Domain.Application.Repository;
 using ChallengeN5.Command.Persistance.Application.Data;
 using ChallengeN5.Command.Persistance.Architecture;
 
-public class PermissionRepository : Repository<Permission, int>, IPermissionRepository
+public class EmployeeRepository : Repository<Employee, int>, IEmployeeRepository
 {
-    public PermissionRepository(N5Context context) : base(context)
+    public EmployeeRepository(N5Context context) : base(context)
     {
     }
 }
