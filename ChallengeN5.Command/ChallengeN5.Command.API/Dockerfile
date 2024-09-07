@@ -13,6 +13,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ChallengeN5.Command/ChallengeN5.Command.API/ChallengeN5.Command.API.csproj", "ChallengeN5.Command/ChallengeN5.Command.API/"]
+COPY ["ChallengeN5.Command/ChallengeN5.Command.Persistance/ChallengeN5.Command.Persistance.csproj", "ChallengeN5.Command/ChallengeN5.Command.Persistance/"]
+COPY ["ChallengeN5.Command/ChallengeN5.Command.Domain/ChallengeN5.Command.Domain.csproj", "ChallengeN5.Command/ChallengeN5.Command.Domain/"]
 RUN dotnet restore "./ChallengeN5.Command/ChallengeN5.Command.API/ChallengeN5.Command.API.csproj"
 COPY . .
 WORKDIR "/src/ChallengeN5.Command/ChallengeN5.Command.API"
