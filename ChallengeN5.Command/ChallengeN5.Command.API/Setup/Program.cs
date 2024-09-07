@@ -42,7 +42,7 @@ builder.Services.AddSwaggerGen(
 
 builder.Services
     .AddDbContext<N5Context>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), options => options.MigrationsAssembly("ChallengeN5.Command.Persistance")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionDocker"), options => options.MigrationsAssembly("ChallengeN5.Command.Persistance")));
 
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();

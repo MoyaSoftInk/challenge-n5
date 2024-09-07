@@ -1,0 +1,25 @@
+services:
+  challengen5.command.api:
+    image: ${DOCKER_REGISTRY-}challengen5commandapi
+    build:
+      context: .
+      dockerfile: ChallengeN5.Command/ChallengeN5.Command.API/Dockerfile
+    depends_on:
+      - sqlserver
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ChallengeN5;User Id=SA;Password=1234;TrustServerCertificate=true;"
+    command: >
+      sh -c "dotnet ef database update && dotnet run"
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "1234"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/var/opt/mssql
+
+volumes:
+  sqlvolume:
+
