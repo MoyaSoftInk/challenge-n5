@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   challengen5.command.api:
     image: ${DOCKER_REGISTRY-}challengen5commandapi
@@ -6,13 +8,16 @@ services:
       dockerfile: ChallengeN5.Command/ChallengeN5.Command.API/Dockerfile
     depends_on:
       - sqlserver
+      - elasticsearch
     environment:
       ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ChallengeN5;User Id=SA;Password=1234;TrustServerCertificate=true;"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
     command: >
       sh -c "dotnet ef database update && dotnet run"
     ports:
       - "5000:5000" 
     restart: always
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
@@ -24,6 +29,28 @@ services:
       - sqlvolume:/var/opt/mssql
     container_name: sqlserver
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.7.1
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
 volumes:
   sqlvolume:
-
+  esdata:

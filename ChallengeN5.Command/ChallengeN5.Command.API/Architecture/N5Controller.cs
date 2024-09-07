@@ -11,15 +11,18 @@ using System.Reflection;
 public class N5Controller : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger _logger;
     private static string? NameMethodCall => MethodBase.GetCurrentMethod()!.DeclaringType!.FullName;
 
     /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="mediator"></param>
-    public N5Controller(IMediator mediator)
+    /// <param name="logger"></param>
+    public N5Controller(IMediator mediator, ILogger logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     /// <summary>
@@ -31,10 +34,11 @@ public class N5Controller : ControllerBase
     /// <exception cref="Exception"></exception>
     protected async Task<ActionResult> RunHandler(BaseRequest request, CancellationToken cancellationToken)
     {
+        _logger.LogInformation($"{NameMethodCall} - {request.GetType().Name} - {request}");
         if (!ModelState.IsValid || request is null) throw new Exception("!ModelState.IsValid");
        
         BaseResponse? response = await _mediator.Send(request, cancellationToken) as BaseResponse;
-        
+        _logger.LogInformation($"{NameMethodCall} - {request.GetType().Name} - {response}");
         return StatusCode(response!.HttpCode, response);
     }
 }

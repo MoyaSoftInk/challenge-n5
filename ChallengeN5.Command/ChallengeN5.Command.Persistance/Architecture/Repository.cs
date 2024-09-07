@@ -3,6 +3,7 @@ using ChallengeN5.Command.Domain.Architecture.Repository;
 using ChallengeN5.Command.Domain.Architecture.SeedWork;
 using ChallengeN5.Command.Persistance.Application.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace ChallengeN5.Command.Persistance.Architecture;
@@ -17,66 +18,79 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     where TKey : struct, IEquatable<TKey>
 {
     private readonly N5Context _context;
+    private readonly ILogger _logger;
 
-    public Repository(N5Context context)
+    public Repository(N5Context context, ILogger logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken)
     {
+        _logger.LogInformation($"Creating {entity.GetType().Name} - {entity}");
         await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation($"Created {entity.GetType().Name} - {entity}");
     }
 
     public void Create(TEntity entity)
     {
+        _logger.LogInformation($"Creating {entity.GetType().Name} - {entity}");
         _context.Set<TEntity>().Add(entity);
-        _context.SaveChanges();
+        _logger.LogInformation($"Created {entity.GetType().Name} - {entity}");
     }
 
     public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
+        _logger.LogInformation($"Updating {entity.GetType().Name} - {entity}");
         _context.Set<TEntity>().Update(entity);
         await _context.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation($"Updated {entity.GetType().Name} - {entity}");
     }
 
     public void Update(TEntity entity)
     {
+        _logger.LogInformation($"Updating {entity.GetType().Name} - {entity}");
         _context.Set<TEntity>().Update(entity);
-        _context.SaveChanges();
+        _logger.LogInformation($"Updated {entity.GetType().Name} - {entity}");
     }
 
     public async Task<TEntity?> GetByIdAsync(TKey key, CancellationToken cancellationToken)
     {
+        _logger.LogInformation($"Getting {typeof(TEntity).Name} by id {key}");
         object[] keys = { key };
         return await _context.Set<TEntity>().FindAsync(keys, cancellationToken);
     }
 
     public TEntity? GetById(TKey key)
     {
+        _logger.LogInformation($"Getting {typeof(TEntity).Name} by id {key}");
         return _context.Set<TEntity>().Find(key);
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
     {
+        _logger.LogInformation($"Getting all {typeof(TEntity).Name}");
         return await _context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
     public IEnumerable<TEntity> GetAll()
     {
+        _logger.LogInformation($"Getting all {typeof(TEntity).Name}");
         return _context.Set<TEntity>().ToList();
     }
 
     public void Delete(TEntity entity)
     {
+        _logger.LogInformation($"Deleting {entity.GetType().Name} - {entity}");
         _context.Set<TEntity>().Remove(entity);
-        _context.SaveChanges();
+        _logger.LogInformation($"Deleted {entity.GetType().Name} - {entity}");
     }
 
     public async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>? orderByExpression = null, bool ascending = true,
         CancellationToken cancellationToken = default)
     {
+        _logger.LogInformation($"Getting filtered {typeof(TEntity).Name}");
         IQueryable<TEntity> query = Query().Where(filter);
 
         if (orderByExpression == null)
@@ -92,6 +106,7 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     public async Task<PagedElements<TEntity>> GetPagedAsync(int pageIndex, int pageCount, Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>? orderByExpression = null,
         bool ascending = true, CancellationToken cancellationToken = default)
     {
+        _logger.LogInformation($"Getting paged {typeof(TEntity).Name}");
         //TODO MUST BE CREATE A HANDLE EXCEPTION FOR VALIDATE TO ARGUMENTS
         if (orderByExpression is null)
         {
@@ -117,6 +132,7 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public IEnumerable<TEntity> GetFiltered(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>? orderByExpression = null, bool ascending = true)
     {
+        _logger.LogInformation($"Getting filtered {typeof(TEntity).Name}");
         //TODO MUST BE CREATE A HANDLE EXCEPTION FOR VALIDATE TO ARGUMENTS
         IQueryable<TEntity> query = Query().Where(filter);
 
@@ -133,6 +149,7 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     public PagedElements<TEntity> GetPaged(int pageIndex, int pageCount, Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>? orderByExpression = null,
         bool ascending = true)
     {
+        _logger.LogInformation($"Getting paged {typeof(TEntity).Name}");
         if (orderByExpression is null)
         {
             throw new ArgumentNullException(nameof(orderByExpression));

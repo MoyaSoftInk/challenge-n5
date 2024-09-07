@@ -18,7 +18,8 @@ public class PermissionController : N5Controller
     /// Constructor
     /// </summary>
     /// <param name="mediator"></param>
-    public PermissionController(IMediator mediator) : base(mediator)
+    /// <param name="logger"></param>
+    public PermissionController(IMediator mediator, ILogger<PermissionController> logger) : base(mediator, logger)
     {
     }
 
