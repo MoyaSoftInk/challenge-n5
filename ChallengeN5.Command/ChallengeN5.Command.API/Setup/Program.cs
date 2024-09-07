@@ -1,5 +1,6 @@
 using ChallengeN5.Command.API.Application.Command.PostRequestPermision;
 using ChallengeN5.Command.API.Architecture.Core;
+using ChallengeN5.Command.API.Architecture.Extension;
 using ChallengeN5.Command.Domain.Application.Repository;
 using ChallengeN5.Command.Domain.Architecture.Core;
 using ChallengeN5.Command.Persistance.Application;
@@ -8,9 +9,16 @@ using ChallengeN5.Command.Persistance.Application.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 
@@ -62,6 +70,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
