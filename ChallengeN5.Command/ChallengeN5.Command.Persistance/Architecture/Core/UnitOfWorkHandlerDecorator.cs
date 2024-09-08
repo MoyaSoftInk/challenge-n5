@@ -1,4 +1,4 @@
-﻿namespace ChallengeN5.Command.API.Architecture.Core;
+﻿namespace ChallengeN5.Command.Infrastructure.Architecture.Core;
 
 using ChallengeN5.Command.Domain.Architecture.Core;
 using MediatR;

@@ -3,6 +3,7 @@
 using ChallengeN5.Command.API.Architecture.Model;
 using ChallengeN5.Command.Domain.Application.Model;
 using ChallengeN5.Command.Domain.Application.Repository;
+using ChallengeN5.Command.Domain.Application.Service;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,13 +14,17 @@ using System.Threading.Tasks;
 public class PutPermissionHandler : IRequestHandler<PutPermissionCommand, BaseResponse>
 {
     private readonly IPermissionRepository _permissionRepository;
+    private readonly IKafkaProducerService _kafkaProducerService;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public PutPermissionHandler(IPermissionRepository permissionRepository)
+    public PutPermissionHandler(
+        IPermissionRepository permissionRepository,
+        IKafkaProducerService kafkaProducerService)
     {
         _permissionRepository = permissionRepository;
+        _kafkaProducerService = kafkaProducerService;
     }
 
     /// <summary>
@@ -37,6 +42,8 @@ public class PutPermissionHandler : IRequestHandler<PutPermissionCommand, BaseRe
         UpdatePermissionDetails(request, permission);
 
         await _permissionRepository.UpdateAsync(permission, cancellationToken);
+
+        await _kafkaProducerService.ProduceAsync("permission-topic", permission, cancellationToken);
 
         return new BaseResponse
         {

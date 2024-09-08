@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Command.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Command.API", "ChallengeN5.Command\ChallengeN5.Command.API\ChallengeN5.Command.API.csproj", "{7DD19860-A30E-4CEE-8427-F5905874DC99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Command.Persistance", "ChallengeN5.Command\ChallengeN5.Command.Persistance\ChallengeN5.Command.Persistance.csproj", "{D26966A2-ABC3-488C-B6BD-C77798EF34C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Command.Infrastructure", "ChallengeN5.Command\ChallengeN5.Command.Persistance\ChallengeN5.Command.Infrastructure.csproj", "{D26966A2-ABC3-488C-B6BD-C77798EF34C7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Query.API", "ChallengeN5.Query\ChallengeN5.Query.API\ChallengeN5.Query.API.csproj", "{6244F491-3EAB-4F5A-8EB5-F883713238DC}"
 EndProject

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.5.3" />
     <PackageReference Include="MediatR" Version="12.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
@@ -39,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChallengeN5.Command.Persistance\ChallengeN5.Command.Persistance.csproj" />
+    <ProjectReference Include="..\ChallengeN5.Command.Persistance\ChallengeN5.Command.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace ChallengeN5.Command.Persistance.Application.Data;
+﻿namespace ChallengeN5.Command.Infrastructure.Application.Data;
 
 using ChallengeN5.Command.Domain.Application.Model;
 using Microsoft.EntityFrameworkCore;
