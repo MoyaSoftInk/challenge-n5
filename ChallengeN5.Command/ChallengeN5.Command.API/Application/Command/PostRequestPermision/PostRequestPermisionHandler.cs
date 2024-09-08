@@ -3,7 +3,9 @@
 using ChallengeN5.Command.API.Architecture.Model;
 using ChallengeN5.Command.Domain.Application.Model;
 using ChallengeN5.Command.Domain.Application.Repository;
+using ChallengeN5.Command.Domain.Application.Service;
 using MediatR;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +17,7 @@ public class PostRequestPermisionHandler : IRequestHandler<PostRequestPermisionC
     private readonly IPermissionRepository _permissionRepository;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IPermissionTypeRepository _permissionTypeRepository;
+    private readonly IKafkaProducerService _kafkaProducerService;
 
 
     /// <summary>
@@ -23,14 +26,17 @@ public class PostRequestPermisionHandler : IRequestHandler<PostRequestPermisionC
     /// <param name="permissionRepository"></param>
     /// <param name="employeeRepository"></param>
     /// <param name="permissionTypeRepository"></param>
+    /// <param name="kafkaProducerService"></param>
     public PostRequestPermisionHandler(
         IPermissionRepository permissionRepository,
         IEmployeeRepository employeeRepository,
-        IPermissionTypeRepository permissionTypeRepository)
+        IPermissionTypeRepository permissionTypeRepository,
+        IKafkaProducerService kafkaProducerService)
     {
         _permissionRepository = permissionRepository;
         _employeeRepository = employeeRepository;
         _permissionTypeRepository = permissionTypeRepository;
+        _kafkaProducerService = kafkaProducerService;
     }
 
     /// <summary>
@@ -45,15 +51,11 @@ public class PostRequestPermisionHandler : IRequestHandler<PostRequestPermisionC
         Employee employee = new();
         PermissionType permissionType = new();
 
-        await ValidateAndRetrieveEntities(request, employee, permissionType, cancellationToken);
+        Permission permission = await ValidateAndRetrieveEntities(request, employee, permissionType, cancellationToken);
+       
+        await _permissionRepository.CreateAsync(permission, cancellationToken);
 
-        await _permissionRepository.CreateAsync(new Permission
-        {
-            Employee = employee,
-            PermissionType = permissionType,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate
-        }, cancellationToken);
+        await _kafkaProducerService.ProduceAsync("permission-topic", permission, cancellationToken);
 
         return new BaseResponse
         {
@@ -72,7 +74,7 @@ public class PostRequestPermisionHandler : IRequestHandler<PostRequestPermisionC
     /// <returns></returns>
     /// <exception cref="KeyNotFoundException"></exception>
     /// <exception cref="Exception"></exception>
-    private async Task ValidateAndRetrieveEntities(PostRequestPermisionCommand request, Employee employee, PermissionType permissionType, CancellationToken cancellationToken)
+    private async Task<Permission> ValidateAndRetrieveEntities(PostRequestPermisionCommand request, Employee employee, PermissionType permissionType, CancellationToken cancellationToken)
     {
         employee = await _employeeRepository.GetByIdAsync(request.EmployeeId, cancellationToken) ??
                     throw new KeyNotFoundException($"The employee with Id: {request.EmployeeId}, don't exist");
@@ -82,5 +84,13 @@ public class PostRequestPermisionHandler : IRequestHandler<PostRequestPermisionC
         {
             throw new Exception($"The employee with Id: {request.EmployeeId}, already has a permission of type: {permissionType.Name}");
         }
+
+        return new Permission
+        {
+            Employee = employee,
+            PermissionType = permissionType,
+            StartDate = request.StartDate,
+            EndDate = request.EndDate
+        };
     }
 }

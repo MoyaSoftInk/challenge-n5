@@ -1,12 +1,12 @@
 ﻿using ChallengeN5.Command.Domain.Architecture.Extension;
 using ChallengeN5.Command.Domain.Architecture.Repository;
 using ChallengeN5.Command.Domain.Architecture.SeedWork;
-using ChallengeN5.Command.Persistance.Application.Data;
+using ChallengeN5.Command.Infrastructure.Application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace ChallengeN5.Command.Persistance.Architecture;
+namespace ChallengeN5.Command.Infrastructure.Architecture;
 
 /// <summary>
 /// Base repository with a basic implementation of all method associated in the CRUD with async methods

@@ -1,11 +1,13 @@
 using ChallengeN5.Command.API.Application.Command.PostRequestPermision;
-using ChallengeN5.Command.API.Architecture.Core;
 using ChallengeN5.Command.API.Architecture.Extension;
 using ChallengeN5.Command.Domain.Application.Repository;
+using ChallengeN5.Command.Domain.Application.Service;
 using ChallengeN5.Command.Domain.Architecture.Core;
-using ChallengeN5.Command.Persistance.Application;
-using ChallengeN5.Command.Persistance.Application.Data;
-using ChallengeN5.Command.Persistance.Application.Repository;
+using ChallengeN5.Command.Infrastructure.Application;
+using ChallengeN5.Command.Infrastructure.Application.Data;
+using ChallengeN5.Command.Infrastructure.Application.Repository;
+using ChallengeN5.Command.Infrastructure.Application.Service;
+using ChallengeN5.Command.Infrastructure.Architecture.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -50,7 +52,11 @@ builder.Services.AddSwaggerGen(
 
 builder.Services
     .AddDbContext<N5Context>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionDocker"), options => options.MigrationsAssembly("ChallengeN5.Command.Persistance")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionDocker"),
+        options => options.MigrationsAssembly("ChallengeN5.Command.Persistance")));
+
+builder.Services.AddTransient<IKafkaProducerService, KafkaProducerService>(
+    c => new KafkaProducerService(builder.Configuration["KAFKA_BOOTSTRAP_SERVERS"] ?? "localhost:9092"));
 
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();

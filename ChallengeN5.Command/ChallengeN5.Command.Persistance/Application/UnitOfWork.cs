@@ -1,8 +1,8 @@
-﻿namespace ChallengeN5.Command.Persistance.Application;
+﻿namespace ChallengeN5.Command.Infrastructure.Application;
 
 using ChallengeN5.Command.Domain.Application.Repository;
 using ChallengeN5.Command.Domain.Architecture.Core;
-using ChallengeN5.Command.Persistance.Application.Data;
+using ChallengeN5.Command.Infrastructure.Application.Data;
 using System.Threading.Tasks;
 
 public class UnitOfWork : IUnitOfWork
@@ -10,7 +10,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly N5Context _context;
 
     public UnitOfWork(
-        N5Context context, 
+        N5Context context,
         IPermissionRepository permissionRepository)
     {
         _context = context;
