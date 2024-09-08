@@ -4,8 +4,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 9070
+EXPOSE 9071
 
 
 # This stage is used to build the service project
@@ -13,6 +13,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ChallengeN5.Query/ChallengeN5.Query.API/ChallengeN5.Query.API.csproj", "ChallengeN5.Query/ChallengeN5.Query.API/"]
+COPY ["ChallengeN5.Query/ChallengeN5.Query.Infrastructure/ChallengeN5.Query.Infrastructure.csproj", "ChallengeN5.Query/ChallengeN5.Query.Infrastructure/"]
+COPY ["ChallengeN5.Query/ChallengeN5.Query.Domain/ChallengeN5.Query.Domain.csproj", "ChallengeN5.Query/ChallengeN5.Query.Domain/"]
 RUN dotnet restore "./ChallengeN5.Query/ChallengeN5.Query.API/ChallengeN5.Query.API.csproj"
 COPY . .
 WORKDIR "/src/ChallengeN5.Query/ChallengeN5.Query.API"

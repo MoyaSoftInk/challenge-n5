@@ -20,6 +20,24 @@ services:
       - "5000:5000" 
     restart: always
 
+  challengen5.query.api:
+    image: ${DOCKER_REGISTRY-}challengen5queryapi
+    build:
+      context: .
+      dockerfile: ChallengeN5.Query/ChallengeN5.Query.API/Dockerfile
+    depends_on:
+      - elasticsearch
+      - kafka
+    environment:
+      Elasticsearch__Uri: "http://elasticsearch:9200"
+      Elasticsearch__DefaultIndex: "permissions-index"
+      Kafka__BootstrapServers: "kafka:9092"
+      Kafka__GroupId: "my-consumer-group"
+      Kafka__AutoOffsetReset: "Earliest"
+      Kafka__EnableAutoCommit: "true"
+      Kafka__AutoCommitIntervalMs: "5000"
+    restart: always
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:

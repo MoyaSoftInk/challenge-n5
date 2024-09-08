@@ -33,11 +33,11 @@ builder.Services.AddSwaggerGen(
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Version = "v1",
-            Title = "Challenge N5",
+            Title = "Challenge N5 Command API",
             Description = "Technical Challenge N5",
             Contact = new OpenApiContact
             {
-                Name = "Contact",
+                Name = "Contact José Moya",
                 Url = new Uri("https://www.linkedin.com/in/jmoyau/")
             },
             License = new OpenApiLicense
