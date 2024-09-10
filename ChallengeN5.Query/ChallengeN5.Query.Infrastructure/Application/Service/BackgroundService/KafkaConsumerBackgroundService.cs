@@ -1,6 +1,5 @@
 ﻿namespace ChallengeN5.Query.Infrastructure.Application.Service.BackGroundService;
 
-using ChallengeN5.Query.Domain.Application.Model;
 using ChallengeN5.Query.Domain.Application.Service;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -29,7 +28,7 @@ public class KafkaConsumerBackgroundService : BackgroundService
         {
             try
             {
-                var response = await _kafkaConsumerService.ConsumeAsync<Permission>("permission-topic", stoppingToken);
+                var response = await _kafkaConsumerService.ConsumeAsync("permission-topic", stoppingToken);
 
                 _logger.LogInformation("Message consumed: {0}", response);
             }

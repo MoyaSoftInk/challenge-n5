@@ -39,7 +39,7 @@ public class PutPermissionHandler : IRequestHandler<PutPermissionCommand, BaseRe
         Permission permission = await _permissionRepository.GetByIdAsync(request.PermissionId, cancellationToken) ??
             throw new KeyNotFoundException($"The permission with id:{request.PermissionId}, don't exist.");
         
-        UpdatePermissionDetails(request, permission);
+        UpdatePermissionDetails(request, ref permission);
 
         await _permissionRepository.UpdateAsync(permission, cancellationToken);
 
@@ -57,7 +57,7 @@ public class PutPermissionHandler : IRequestHandler<PutPermissionCommand, BaseRe
     /// </summary>
     /// <param name="request"></param>
     /// <param name="permission"></param>
-    private static void UpdatePermissionDetails(PutPermissionCommand request, Permission permission)
+    private static void UpdatePermissionDetails(PutPermissionCommand request, ref Permission permission)
     {
         permission.StartDate = request.StartDate;
         permission.EndDate = request.EndDate;

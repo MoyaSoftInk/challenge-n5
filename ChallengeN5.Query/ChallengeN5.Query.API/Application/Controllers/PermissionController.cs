@@ -38,12 +38,12 @@ public class PermissionController : N5Controller
     /// <response code="404">The request not found.</response>
     /// <response code="500">Internal server error</response>
     /// <returns>Create the resource</returns>
-    [HttpGet]
+    [HttpGet("{UserId}")]
     [ProducesResponseType(typeof(GetPermissionByUserIdResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorBaseResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ErrorBaseResponse), (int)HttpStatusCode.NotFound)]
     [ProducesResponseType(typeof(ErrorBaseResponse), (int)HttpStatusCode.InternalServerError)]
-    public async Task<ActionResult> RequestPermission([FromBody] GetPermissionByUserIdQuery query, CancellationToken cancellationToken)
+    public async Task<ActionResult> RequestPermission([FromRoute] GetPermissionByUserIdQuery query, CancellationToken cancellationToken)
     {
         return await RunHandler(query, cancellationToken);
     }

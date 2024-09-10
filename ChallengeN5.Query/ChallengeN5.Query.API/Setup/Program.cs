@@ -40,9 +40,13 @@ builder.Services.AddSwaggerGen(
 
 builder.Services.AddSingleton<IElasticSearchService, ElasticSearchService>();
 builder.Services.AddSingleton<IKafkaConsumerService, KafkaConsumerService>();
-//builder.Services.AddHostedService<KafkaConsumerBackgroundService>();
+builder.Services.AddHostedService<KafkaConsumerBackgroundService>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetPermissionByUserIdHandler>());
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(6000);  // Para challengen5.query.api
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -53,7 +57,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ConfigureExceptionHandler();
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

@@ -66,6 +66,10 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Po
 
 builder.Services.Decorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkHandlerDecorator<,>));
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5000);  // Para challengen5.command.api
+});
 
 
 var app = builder.Build();
@@ -77,7 +81,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ConfigureExceptionHandler();
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

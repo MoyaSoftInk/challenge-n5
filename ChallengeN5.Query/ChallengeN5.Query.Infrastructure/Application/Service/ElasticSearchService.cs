@@ -26,7 +26,7 @@ public class ElasticSearchService : IElasticSearchService
         return await _client.SearchAsync<Permission>(s => s
             .Query(q => q
                 .Match(m => m
-                    .Field(f => f.Employee.Id)
+                    .Field(f => f.EmployeeId)
                     .Query(id.ToString())
                 )
             ), cancellationToken

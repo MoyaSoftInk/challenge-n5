@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Query.API", "Ch
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D4B3B626-B929-4691-9F30-A60D90F2F2D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeN5.Query.Domain", "ChallengeN5.Query\ChallengeN5.Query.Domain\ChallengeN5.Query.Domain.csproj", "{6A5CFF27-3777-407B-8BEC-21CA0F3E2767}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Query.Domain", "ChallengeN5.Query\ChallengeN5.Query.Domain\ChallengeN5.Query.Domain.csproj", "{6A5CFF27-3777-407B-8BEC-21CA0F3E2767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeN5.Query.Infrastructure", "ChallengeN5.Query\ChallengeN5.Query.Infrastructure\ChallengeN5.Query.Infrastructure.csproj", "{DCA42DDC-E8C5-4F68-85FF-3F1451BC3CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeN5.Query.Infrastructure", "ChallengeN5.Query\ChallengeN5.Query.Infrastructure\ChallengeN5.Query.Infrastructure.csproj", "{DCA42DDC-E8C5-4F68-85FF-3F1451BC3CC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

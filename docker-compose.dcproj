@@ -4,11 +4,22 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>d4b3b626-b929-4691-9f30-a60d90f2f2d9</ProjectGuid>
+  </PropertyGroup>
+
+  <!-- Configuración para challengen5.command.api -->
+  <PropertyGroup>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:5000/swagger</DockerServiceUrl>
     <DockerServiceName>challengen5.command.api</DockerServiceName>
   </PropertyGroup>
+
+  <!-- Configuración para challengen5.query.api -->
+  <PropertyGroup>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:6010/swagger</DockerServiceUrl>
+    <DockerServiceName>challengen5.query.api</DockerServiceName>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>

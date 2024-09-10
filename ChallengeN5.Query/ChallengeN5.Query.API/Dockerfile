@@ -1,31 +1,22 @@
-# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-# This stage is used when running from VS in fast mode (Default for Debug configuration)
+# Establece la imagen base de .NET SDK
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
 WORKDIR /app
-EXPOSE 9070
-EXPOSE 9071
+EXPOSE 6000
 
-
-# This stage is used to build the service project
+# Imagen para compilar y restaurar dependencias
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ChallengeN5.Query/ChallengeN5.Query.API/ChallengeN5.Query.API.csproj", "ChallengeN5.Query/ChallengeN5.Query.API/"]
-COPY ["ChallengeN5.Query/ChallengeN5.Query.Infrastructure/ChallengeN5.Query.Infrastructure.csproj", "ChallengeN5.Query/ChallengeN5.Query.Infrastructure/"]
-COPY ["ChallengeN5.Query/ChallengeN5.Query.Domain/ChallengeN5.Query.Domain.csproj", "ChallengeN5.Query/ChallengeN5.Query.Domain/"]
-RUN dotnet restore "./ChallengeN5.Query/ChallengeN5.Query.API/ChallengeN5.Query.API.csproj"
+COPY ["ChallengeN5.Query/ChallengeN5.Query.API/ChallengeN5.Query.API.csproj", "ChallengeN5.Query/"]
+RUN dotnet restore "ChallengeN5.Query/ChallengeN5.Query.API/ChallengeN5.Query.API.csproj"
 COPY . .
 WORKDIR "/src/ChallengeN5.Query/ChallengeN5.Query.API"
-RUN dotnet build "./ChallengeN5.Query.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "ChallengeN5.Query.API.csproj" -c Release -o /app/build
 
-# This stage is used to publish the service project to be copied to the final stage
+# Fase de publicación
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./ChallengeN5.Query.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ChallengeN5.Query.API.csproj" -c Release -o /app/publish
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
+# Fase final
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

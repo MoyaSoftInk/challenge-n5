@@ -24,6 +24,13 @@ public class GetPermissionByUserIdHandler : IRequestHandler<GetPermissionByUserI
         _elasticSearchService = elasticSearchService;
     }
 
+    /// <summary>
+    /// Handle del request
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<GetPermissionByUserIdResponse> Handle(GetPermissionByUserIdQuery request, CancellationToken cancellationToken)
     {
         ISearchResponse<Permission> response = 

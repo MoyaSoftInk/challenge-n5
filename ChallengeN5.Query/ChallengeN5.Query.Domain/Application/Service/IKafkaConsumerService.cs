@@ -1,5 +1,6 @@
 ﻿namespace ChallengeN5.Query.Domain.Application.Service;
 
+using ChallengeN5.Query.Domain.Application.Model;
 
 public interface IKafkaConsumerService
 {
@@ -9,5 +10,5 @@ public interface IKafkaConsumerService
     /// <param name="topic"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<TResponse> ConsumeAsync<TResponse>(string topic, CancellationToken cancellationToken);
+    Task<Permission?> ConsumeAsync(string topic, CancellationToken cancellationToken);
 }

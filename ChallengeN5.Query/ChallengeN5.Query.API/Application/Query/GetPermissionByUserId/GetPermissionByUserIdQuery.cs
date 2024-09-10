@@ -2,6 +2,8 @@
 
 using ChallengeN5.Query.API.Architecture.Model;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 /// <summary>
 /// Get permission by user id query
@@ -11,5 +13,7 @@ public class GetPermissionByUserIdQuery : BaseRequest, IRequest<GetPermissionByU
     /// <summary>
     /// user id
     /// </summary>
+    [Required]
+    [FromRoute]
     public int UserId { get; set; }
 }
