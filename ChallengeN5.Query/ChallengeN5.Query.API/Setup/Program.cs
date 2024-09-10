@@ -45,7 +45,7 @@ builder.Services.AddHostedService<KafkaConsumerBackgroundService>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetPermissionByUserIdHandler>());
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(6000);  // Para challengen5.query.api
+    serverOptions.ListenAnyIP(6000); 
 });
 var app = builder.Build();
 

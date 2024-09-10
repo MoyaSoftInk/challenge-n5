@@ -5,15 +5,11 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
   </PropertyGroup>
-
-  <!-- Configuración para challengen5.command.api -->
   <PropertyGroup>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:5000/swagger</DockerServiceUrl>
     <DockerServiceName>challengen5.command.api</DockerServiceName>
   </PropertyGroup>
-
-  <!-- Configuración para challengen5.query.api -->
   <PropertyGroup>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:6010/swagger</DockerServiceUrl>

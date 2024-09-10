@@ -68,7 +68,7 @@ builder.Services.Decorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkHandlerDe
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(5000);  // Para challengen5.command.api
+    serverOptions.ListenAnyIP(5000);
 });
 
 
