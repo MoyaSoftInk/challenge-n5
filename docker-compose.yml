@@ -2,24 +2,35 @@ version: '3.8'
 
 services:
   challengen5.command.api:
-    image: ${DOCKER_REGISTRY-}challengen5commandapi
+    image: challengen5commandapi
     build:
       context: .
       dockerfile: ChallengeN5.Command/ChallengeN5.Command.API/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ChallengeN5;User Id=SA;Password=1234;"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+      KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
     depends_on:
       - sqlserver
       - elasticsearch
       - kafka
+
+  challengen5.query.api:
+    image: challengen5queryapi
+    build:
+      context: .
+      dockerfile: ChallengeN5.Query/ChallengeN5.Query.API/Dockerfile
+    ports:
+      - "6010:6000"
     environment:
-      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ChallengeN5;User Id=SA;Password=1234;TrustServerCertificate=true;"
       ELASTICSEARCH_URL: "http://elasticsearch:9200"
       KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
-    command: >
-      sh -c "dotnet ef database update && dotnet run"
-    ports:
-      - "5000:5000" 
-    restart: always
-
+      ASPNETCORE_ENVIRONMENT: "Development"
+    depends_on:
+      - elasticsearch
+      - kafka
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
